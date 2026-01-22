@@ -1,22 +1,38 @@
 # =====================================================================
 # Pin Assignments for SiMiaoHub SMH-AC415 (EP4CE15F23C8)
-# Verified: LEDs, Buttons, UART, VGA, HDMI, SDRAM, TF-CARD, Shift Register, Reset, Touch
+# Based on official SiMiao Electronics examples and documentation
+# Compatible with Quartus II 13.0 SP1
 # =====================================================================
+
+# ---------------------------------------------------------------------
+# Global Settings
+# ---------------------------------------------------------------------
+set_global_assignment -name FAMILY "Cyclone IV E"
+set_global_assignment -name DEVICE EP4CE15F23C8
+set_global_assignment -name TOP_LEVEL_ENTITY top
+set_global_assignment -name ORIGINAL_QUARTUS_VERSION "13.0 SP1"
+set_global_assignment -name LAST_QUARTUS_VERSION "13.0 SP1"
+set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
+set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
+set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
+set_global_assignment -name ERROR_CHECK_FREQUENCY_DIVISOR "256"
+set_global_assignment -name EDA_SIMULATION_TOOL "ModelSim-Altera (Verilog)"
+set_global_assignment -name EDA_OUTPUT_DATA_FORMAT "VERILOG HDL" -section_id eda_simulation
+set_global_assignment -name AUTO_RESTART_CONFIGURATION OFF
+
+# ¡Importante! Estándar global de I/O según todos los ejemplos de SiMiao
+set_global_assignment -name STRATIX_DEVICE_IO_STANDARD "2.5 V"
 
 # ---------------------------------------------------------------------
 # Clock
 # ---------------------------------------------------------------------
 set_location_assignment PIN_T22 -to CLK_50M
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to CLK_50M
 
 # ---------------------------------------------------------------------
 # System Control
 # ---------------------------------------------------------------------
 set_location_assignment PIN_U20 -to RST
 set_location_assignment PIN_G9  -to TOUCH
-
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to RST
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to TOUCH
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to TOUCH
 
 # ---------------------------------------------------------------------
@@ -35,19 +51,6 @@ set_location_assignment PIN_W22  -to LED_D4_R
 set_location_assignment PIN_V21  -to LED_D4_G
 set_location_assignment PIN_V22  -to LED_D4_B
 
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LED_D1_R
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LED_D1_G
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LED_D1_B
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LED_D2_R
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LED_D2_G
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LED_D2_B
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LED_D3_R
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LED_D3_G
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LED_D3_B
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LED_D4_R
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LED_D4_G
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LED_D4_B
-
 # ---------------------------------------------------------------------
 # Buttons (KEY1–KEY4)
 # ---------------------------------------------------------------------
@@ -55,68 +58,40 @@ set_location_assignment PIN_F12 -to KEY[0]   # KEY1
 set_location_assignment PIN_F13 -to KEY[1]   # KEY2
 set_location_assignment PIN_F14 -to KEY[2]   # KEY3
 set_location_assignment PIN_F15 -to KEY[3]   # KEY4
-
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to KEY[0]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to KEY[1]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to KEY[2]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to KEY[3]
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to KEY[0]
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to KEY[1]
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to KEY[2]
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to KEY[3]
 
 # ---------------------------------------------------------------------
-# UART (SMG section)
+# UART (CH340N)
 # ---------------------------------------------------------------------
 set_location_assignment PIN_U1 -to UART_TX
 set_location_assignment PIN_V1 -to UART_RX
 
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to UART_TX
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to UART_RX
-
 # ---------------------------------------------------------------------
-# VGA
+# VGA (RGB565)
 # ---------------------------------------------------------------------
 set_location_assignment PIN_J21 -to VGA_R[0]
 set_location_assignment PIN_K21 -to VGA_R[1]
+set_location_assignment PIN_L22 -to VGA_R[2]
+set_location_assignment PIN_M22 -to VGA_R[3]
+
 set_location_assignment PIN_M21 -to VGA_G[0]
 set_location_assignment PIN_N21 -to VGA_G[1]
+set_location_assignment PIN_N20 -to VGA_G[2]
+set_location_assignment PIN_U22 -to VGA_G[3]
+set_location_assignment PIN_U21 -to VGA_G[4]
+set_location_assignment PIN_W20 -to VGA_G[5]
+
 set_location_assignment PIN_W19 -to VGA_B[0]
 set_location_assignment PIN_Y21 -to VGA_B[1]
+set_location_assignment PIN_AA19 -to VGA_B[2]
+set_location_assignment PIN_AB19 -to VGA_B[3]
+set_location_assignment PIN_AB18 -to VGA_B[4]
+
 set_location_assignment PIN_AA18 -to VGA_HS
 set_location_assignment PIN_AB17 -to VGA_VS
-
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_R[0]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_R[1]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_G[0]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_G[1]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_B[0]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_B[1]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_HS
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_VS
-
-# VGA - Extended RGB (from silkscreen)
-set_location_assignment PIN_L22 -to VGA_R[2]   # VGA_R2_D13
-set_location_assignment PIN_M22 -to VGA_R[3]   # VGA_R4_D11
-
-set_location_assignment PIN_N20 -to VGA_G[2]   # VGA_G2_D8
-set_location_assignment PIN_U22 -to VGA_G[3]   # VGA_G3_D7
-set_location_assignment PIN_U21 -to VGA_G[4]   # VGA_G4_D6
-set_location_assignment PIN_W20 -to VGA_G[5]   # VGA_G5_D5
-
-set_location_assignment PIN_AA19 -to VGA_B[2]  # VGA_B3_D1
-set_location_assignment PIN_AB19 -to VGA_B[3]  # VGA_B2_D2
-set_location_assignment PIN_AB18 -to VGA_B[4]  # VGA_B4_D0
-
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_R[2]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_R[3]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_G[2]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_G[3]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_G[4]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_G[5]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_B[2]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_B[3]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_B[4]
 
 # ---------------------------------------------------------------------
 # HDMI
@@ -127,28 +102,15 @@ set_location_assignment PIN_E21 -to HDMI_D1_P
 set_location_assignment PIN_E22 -to HDMI_D1_N
 set_location_assignment PIN_F21 -to HDMI_D0_P
 set_location_assignment PIN_F22 -to HDMI_D0_N
-set_location_assignment PIN_K22 -to HDMI_CEC
 set_location_assignment PIN_H21 -to HDMI_CLK_P
 set_location_assignment PIN_H22 -to HDMI_CLK_N
+set_location_assignment PIN_K22 -to HDMI_CEC
 set_location_assignment PIN_R22 -to HDMI_SDA
 set_location_assignment PIN_N22 -to HDMI_SCL
 set_location_assignment PIN_J22 -to HDMI_HPD
 
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HDMI_D2_P
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HDMI_D2_N
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HDMI_D1_P
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HDMI_D1_N
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HDMI_D0_P
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HDMI_D0_N
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HDMI_CEC
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HDMI_CLK_P
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HDMI_CLK_N
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HDMI_SDA
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HDMI_SCL
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HDMI_HPD
-
 # ---------------------------------------------------------------------
-# SDRAM — CORREGIDO: SDRAM_D[6] = A1
+# SDRAM (256Mbit)
 # ---------------------------------------------------------------------
 set_location_assignment PIN_B3  -to SDRAM_A[0]
 set_location_assignment PIN_B1  -to SDRAM_A[1]
@@ -190,89 +152,19 @@ set_location_assignment PIN_H2  -to SDRAM_D[13]
 set_location_assignment PIN_J3  -to SDRAM_D[14]
 set_location_assignment PIN_J4  -to SDRAM_D[15]
 
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDRAM_A[0]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDRAM_A[1]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDRAM_A[2]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDRAM_A[3]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDRAM_A[4]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDRAM_A[5]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDRAM_A[6]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDRAM_A[7]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDRAM_A[8]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDRAM_A[9]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDRAM_A[10]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDRAM_A[11]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDRAM_A[12]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDRAM_BA[0]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDRAM_BA[1]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDRAM_CAS
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDRAM_CLK
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDRAM_CKE
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDRAM_CS
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDRAM_RAS
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDRAM_WE
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDRAM_LDQM
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDRAM_UDQM
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDRAM_D[0]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDRAM_D[1]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDRAM_D[2]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDRAM_D[3]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDRAM_D[4]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDRAM_D[5]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDRAM_D[6]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDRAM_D[7]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDRAM_D[8]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDRAM_D[9]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDRAM_D[10]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDRAM_D[11]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDRAM_D[12]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDRAM_D[13]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDRAM_D[14]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDRAM_D[15]
-
 # ---------------------------------------------------------------------
-# TF CARD (microSD in SPI mode)
+# TF CARD (SPI mode)
 # ---------------------------------------------------------------------
 set_location_assignment PIN_E7  -to TF_CS
 set_location_assignment PIN_F7  -to TF_MOSI
 set_location_assignment PIN_E9  -to TF_MISO
 set_location_assignment PIN_F8  -to TF_SCLK
-set_location_assignment PIN_F9  -to TF_D1
-set_location_assignment PIN_E6  -to TF_D2
 set_location_assignment PIN_E10 -to TF_CD
 
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to TF_CS
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to TF_MOSI
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to TF_MISO
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to TF_SCLK
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to TF_D1
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to TF_D2
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to TF_CD
-
 # ---------------------------------------------------------------------
-# 74HC595 Shift Register (for 7-seg, LED matrix, etc.)
+# 74HC595 Shift Register
 # ---------------------------------------------------------------------
 set_location_assignment PIN_W1  -to SR_SHCP   # SRCLK
 set_location_assignment PIN_Y1  -to SR_STCP   # RCLK / LATCH
 set_location_assignment PIN_AA1 -to SR_DS     # SER
 set_location_assignment PIN_Y2  -to SR_OE     # Output Enable (active low)
-
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SR_SHCP
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SR_STCP
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SR_DS
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SR_OE
-
-# ---------------------------------------------------------------------
-# Global settings
-# ---------------------------------------------------------------------
-set_global_assignment -name FAMILY "Cyclone IV E"
-set_global_assignment -name DEVICE EP4CE15F23C8
-set_global_assignment -name TOP_LEVEL_ENTITY top
-set_global_assignment -name ORIGINAL_QUARTUS_VERSION 24.1.0
-set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
-set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
-set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
-set_global_assignment -name ERROR_CHECK_FREQUENCY_DIVISOR "256"
-set_global_assignment -name EDA_SIMULATION_TOOL "ModelSim-Altera (Verilog)"
-set_global_assignment -name EDA_OUTPUT_DATA_FORMAT "VERILOG HDL" -section_id eda_simulation
-set_global_assignment -name AUTO_RESTART_CONFIGURATION OFF
